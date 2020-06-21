@@ -22,6 +22,22 @@ class QueryHelper():
         else:
             df_res = BayesNetHelper.query(bayes_net, query_vars, evidence_vars)
         return self.combine(df_res)
+    
+    def map_query(self, bayes_net, query_vars, evidence_vars):
+        # if evidence vars is mismatched and was assigned specific value,
+        # need to expand the query
+        need_to_expand = []
+        if evidence_vars is not None:
+            new_evidence_vars, need_to_expand = self.mapEvidenceVars(
+                evidence_vars)
+        if need_to_expand:
+            list_of_new_evidence_vars = self.expandQueries(
+                new_evidence_vars, need_to_expand)
+            df_res = self.performExpandedQueries(
+                bayes_net, query_vars, list_of_new_evidence_vars)
+        else:
+            df_res = BayesNetHelper.map_query(bayes_net, query_vars, evidence_vars)
+        return df_res
 
     def mapEvidenceVars(self, evidence_vars):
         new_evidence_vars = {}

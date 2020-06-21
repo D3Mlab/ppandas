@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="PPandas",
-    version="0.0.1.6.7",
+    version="0.0.1.7.1",
     author="Amy Sui, Alex Kwan",
     author_email="suiyiamy@gmail.com, alex.kwan@mail.utoronto.ca",
     description="A python tool for merging different datasets",
