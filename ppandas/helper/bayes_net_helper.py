@@ -144,6 +144,19 @@ class BayesNetHelper():
                 variables=query_vars, evidence=None,
                 show_progress=False)
         return BayesNetHelper.convertFactorToDF(q)
+    
+    @staticmethod
+    def map_query(bayes_net, query_vars, evidence_vars):
+        bayes_net_infer = VariableElimination(bayes_net)
+        if evidence_vars:
+            q = bayes_net_infer.map_query(
+                variables=query_vars, evidence=evidence_vars,
+                show_progress=False)
+        else:
+            q = bayes_net_infer.map_query(
+                variables=query_vars, evidence=None,
+                show_progress=False)
+        return q
 
     @staticmethod
     def convertFactorToDF(phi):

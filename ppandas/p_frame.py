@@ -151,6 +151,18 @@ class PDataFrame():
                                        evidence_vars)
         return res
 
+    def map_query(self, query_vars, evidence_vars=None, entries='reference'):
+        if not self.atomic:
+            if entries == 'reference':
+                q_helper = QueryHelper(self.reference_mapping)
+            else:
+                q_helper = QueryHelper(self.second_mapping)
+            res = q_helper.map_query(self.bayes_net, query_vars, evidence_vars)
+        else:
+            res = BayesNetHelper.map_query(self.bayes_net, query_vars,
+                                       evidence_vars)
+        return res
+
     def predict(self, test_df, query_var, evidence_vars, query_var_state=None):
         test_df = test_df.astype(str)
         features = list(test_df.columns.values)
