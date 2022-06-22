@@ -20,7 +20,7 @@ mkl-fft==1.0.15
 mkl-random==1.1.0
 mkl-service==2.3.0
 networkx==2.4
-numpy==1.16.5
+numpy==1.22.0
 pandas==0.24.2
 pgmpy==0.1.9
 ppandas==0.0.1.5
