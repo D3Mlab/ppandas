@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from helper.bayes_net_helper import BayesNetHelper
+from .bayes_net_helper import BayesNetHelper
 
 class QueryHelper():
     def __init__(self, mapping):

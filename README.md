@@ -6,27 +6,16 @@ This package accepts input data as pandas DataFrames and is backed by pgmpy.
 
 Created by Yi (Amy) Sui and Alex Kwan under the supervision of Professor Scott Sanner at the University of Toronto.
 
+Updated in 2025 by Fabian Corbin for `piccard`.
+
 ## Related article
-The package implements the Bayesian Motifs in the article ...
+The package implements the Bayesian Motifs in [this article](https://www.researchgate.net/publication/383200494_Bayesian_network_Motifs_for_reasoning_over_heterogeneous_unlinked_datasets).
 
 Use cases in this article are implemented in [experiments](https://github.com/D3Mlab/ppandas/tree/master/experiments).
 
-## Prerequisites
-
-This package requires the user to install pgmpy 0.1.9, networkx 2.4, matplotlib, python-interval, geopandas, geovoronoi.
-
+## Installing (the current version of) ppandas
 ```
-pip install pgmpy==0.1.9
-pip install networkx==2.4
-pip install matplotlib
-pip install python-interval
-pip install geopandas
-pip install geovoronoi
-```
-
-## Installing ppandas
-```
-pip install -i https://test.pypi.org/simple/ PPandas
+pip install git+https://github.com/fcorbin567/ppandas.git
 ```
 
 ## Tutorials

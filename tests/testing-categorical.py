@@ -2,8 +2,8 @@ import pandas as pd
 from ppandas import PDataFrame
 
 
-df1 = pd.read_csv("data/numerical-1.csv")
-df2 = pd.read_csv("data/numerical-2.csv")
+df1 = pd.read_csv("testing/numerical-1.csv")
+df2 = pd.read_csv("testing/numerical-2.csv")
 
 pd1 = PDataFrame(["Gender","Age"],df1)
 pd2 = PDataFrame(["Gender","Age"],df2)

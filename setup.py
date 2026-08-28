@@ -19,5 +19,17 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
-    install_requires=[],
+    install_requires=[
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "networkx>=3.2",
+    "pgmpy>=0.1.26",
+    "shapely>=2.0",
+    "geopandas>=0.14",
+    "Rtree>=1.2",
+    "geovoronoi>=0.4",
+    "intervals>=0.9",
+    "matplotlib>=3.8",
+],
 )

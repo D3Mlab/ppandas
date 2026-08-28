@@ -4,9 +4,9 @@ import ast
 from shapely.geometry import Point
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy.models import DiscreteBayesianNetwork
-from helper.bayes_net_helper import BayesNetHelper
-from helper.query_helper import QueryHelper
-from mismatch_handler import\
+from .helper.bayes_net_helper import BayesNetHelper
+from .helper.query_helper import QueryHelper
+from .mismatch_handler import\
     NumericalHandler, categoricalHandler, spatialHandler
 
 # Well-Known Text (WKT) converters so that all the mapping works as expected
@@ -114,6 +114,11 @@ class PDataFrame():
             self.bayes_net = BayesNetHelper.\
                 single_bayes_net(data, self.independent_vars,
                                  self.dependent_vars)
+            # Debug print state names for 'cat' if present
+            if 'cat' in self.independent_vars:
+                cpd = self.bayes_net.get_cpds('cat')
+                if cpd is not None and hasattr(cpd, 'state_names'):
+                    print(f"[DEBUG] PDataFrame.__init__: 'cat' state_names = {cpd.state_names['cat'] if 'cat' in cpd.state_names else None}")
             self.atomic = True
 
         elif isinstance(data, DiscreteBayesianNetwork):
@@ -175,8 +180,7 @@ class PDataFrame():
         if mismatches:
             for mNode, mType in mismatches.items():
                 if mNode not in self.independent_vars:
-                    raise ValueError("Only mismatches across independent\
-                     variables can be handled.")
+                    raise ValueError("Only mismatches across independent variables can be handled.")
                 elif mType == 'numerical':
                     handler = NumericalHandler(mNode)
                 elif mType == 'categorical':
@@ -184,20 +188,16 @@ class PDataFrame():
                 elif mType == 'spatial':
                     handler = spatialHandler(mNode)
                 else:
-                    raise ValueError("mismatch type {} is currently not \
-                        supported".format(mType))
+                    raise ValueError(f"mismatch type {mType} is currently not supported")
                 convert_location_states_to_wkt(reference_bayes, node=mNode)
                 convert_location_states_to_wkt(second_bayes, node=mNode)
-                ref_mapping, sec_mapping = handler.computeMapping(
-                    reference_bayes, second_bayes)
+                ref_mapping, sec_mapping = handler.computeMapping(reference_bayes, second_bayes)
                 ref_mapping = convert_geo_dict_keys_and_values_to_wkt(ref_mapping)
                 sec_mapping = convert_geo_dict_keys_and_values_to_wkt(sec_mapping)
                 reference_mapping[mNode] = ref_mapping
                 second_mapping[mNode] = sec_mapping
-                reference_bayes = handler.replaceMismatchNode(
-                    reference_bayes, ref_mapping)
-                second_bayes = handler.replaceMismatchNode(
-                    second_bayes, sec_mapping)
+                reference_bayes = handler.replaceMismatchNode(reference_bayes, ref_mapping)
+                second_bayes = handler.replaceMismatchNode(second_bayes, sec_mapping)
 
         final_bayes = BayesNetHelper.join(
             reference_bayes, second_bayes, new_dependent_vars,
